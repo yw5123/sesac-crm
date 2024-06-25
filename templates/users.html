@@ -21,6 +21,15 @@
         {% endfor %}
     </table>
     <ul class="pagination">
+    {% if pages['prevPages'] %}
+        <li><a href="/crm/users/{{ pages['pagelist'][0] - 1 }}">이전</a></li>
+    {% endif %}
+    {% for page in pages['pagelist'] %}
+        <li><a href="/crm/users/{{ page }}">{{ page }}</a></li>
+    {% endfor %}
+    {% if pages['nextPages'] %}
+        <li><a href="/crm/users/{{ pages['pagelist'][9] + 1 }}">다음</a></li>
+    {% endif %}
     </ul>
 </div>
 {% endblock %}

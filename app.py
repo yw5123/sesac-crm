@@ -1,5 +1,6 @@
 from flask import Flask, render_template, redirect, url_for
 from database import get_query, execute_query
+from pagefunction import get_current_page_info
 import math
 
 app = Flask(__name__)
@@ -17,6 +18,8 @@ def users(page=1):
         'current': page,
         'last': lastpage
     }
+
+    pages['pagelist'], pages['prevPages'], pages['nextPages'] = get_current_page_info(page, lastpage)
 
     query = "SELECT * FROM users LIMIT ? OFFSET ?"
     users = get_query(query, (per_page, per_page*(page - 1)))
