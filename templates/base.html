@@ -3,17 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <title>Customer Management System</title>
+    <style>
+        header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 70px;
+            z-index: 100;
+            background-color: darkolivegreen;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        nav {
+            width: 80%;
+        }
+        nav a{
+            font-size: larger;
+            color: azure;
+            text-decoration-line: none;
+            margin: 10px;
+        }
+        .content {
+            padding-top: 70px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .datatable {
+            width: 800px;
+            border: none;
+            text-align: center;
+        }
+        .datatable th {
+            border-top: 1px solid #999999;
+            border-bottom: 2px solid #666666;
+            padding: 10px;
+        }
+        .datatable td {
+            border-bottom: 1px solid #999999;
+            padding: 10px;
+        }
+        .datatable tr:not(:first-child):hover {
+            background-color: aliceblue;
+        }
+        .pagination {
+            padding-top: 10px;
+        }
+    </style>
+    {% block script %}{% endblock %}
 </head>
 <body>
-    <nav>
-        <a href="{{ url_for('users') }}">User</a>
-        <a href="{{ url_for('orders') }}">Order</a>
-        <a href="{{ url_for('order_items') }}">Order Item</a>
-        <a href="{{ url_for('items') }}">Item</a>
-        <a href="{{ url_for('stores') }}">Store</a>
-    </nav>
-    <div>
+    <header>
+        <nav>
+            <a href="{{ url_for('users') }}">User</a>
+            <a href="{{ url_for('orders') }}">Order</a>
+            <a href="{{ url_for('order_items') }}">Order-Item</a>
+            <a href="{{ url_for('items') }}">Item</a>
+            <a href="{{ url_for('stores') }}">Store</a>
+        </nav>
+    </header>
+    <div class="content">
         {% block content %}{% endblock %}
     </div>
+    
+
 </body>
 </html>

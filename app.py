@@ -1,15 +1,27 @@
 from flask import Flask, render_template, redirect, url_for
 from database import get_query, execute_query
+import math
 
 app = Flask(__name__)
 
 @app.route('/')
-def home():
-    return redirect(url_for('users'))
-
 @app.route('/crm/users')
-def users():
-    return render_template('users.html')
+@app.route('/crm/users/<int:page>')
+def users(page=1):
+    per_page = 20
+
+    query = "SELECT COUNT(*) AS 'Num' FROM users"
+    data_num = get_query(query)[0]['Num']
+    lastpage = math.ceil(int(data_num) / per_page)
+    pages = {
+        'current': page,
+        'last': lastpage
+    }
+
+    query = "SELECT * FROM users LIMIT ? OFFSET ?"
+    users = get_query(query, (per_page, per_page*(page - 1)))
+
+    return render_template('users.html', users=users, pages=pages)
 
 @app.route('/crm/orders')
 def orders():

@@ -19,6 +19,7 @@ def get_query(query, params=None):
         cur.execute(query)
 
     result = cur.fetchall()
+    result = [dict(row) for row in result]
     conn.close()
 
     return result
