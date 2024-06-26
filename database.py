@@ -13,6 +13,9 @@ def get_query(query, params=None):
     conn = get_db_connection()
     cur = conn.cursor()
 
+    # if len(params) == 0:
+    #     params = None
+
     if params:
         cur.execute(query, params)
     else:

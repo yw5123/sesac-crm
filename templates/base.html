@@ -10,12 +10,11 @@
             height: 70px;
             z-index: 100;
             background-color: darkolivegreen;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
         nav {
-            width: 80%;
+            position: absolute;
+            top: 20px;
+            left: 20px;
         }
         nav a{
             font-size: larger;
@@ -28,6 +27,10 @@
             display: flex;
             justify-content: center;
             align-items: center;
+        }
+        .searchcontainer {
+            margin: 20px;
+            text-align: center;
         }
         .datatable {
             width: 800px;
@@ -56,6 +59,11 @@
         }
         .pagination li a {
             text-decoration-line: none;
+            color: #666666;
+        }
+        .currentpage {
+            font-weight: bold;
+            color: green;
         }
     </style>
     {% block script %}{% endblock %}
@@ -73,7 +81,5 @@
     <div class="content">
         {% block content %}{% endblock %}
     </div>
-    
-
 </body>
 </html>

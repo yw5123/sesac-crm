@@ -1,6 +1,10 @@
-def get_current_page_info(currentpage, lastpage):
+import math
+
+def get_current_page_info(currentpage, data_num, per_page):
+    lastpage = math.ceil(data_num / per_page)
     current_page_list = []
     current_10 = (currentpage - 1) // 10
+
     prevPages = True
     nextPages = True
 
@@ -21,7 +25,15 @@ def get_current_page_info(currentpage, lastpage):
         for i in range(current_10 * 10 + 1, (current_10 + 1) * 10 + 1):
             current_page_list.append(i)
 
-    return current_page_list, prevPages, nextPages
+    pages = {
+        'current': currentpage,
+        'last': lastpage,
+        'pagelist': current_page_list,
+        'prevPages': prevPages,
+        'nextPages': nextPages
+    }
+
+    return pages
 
 
 if __name__ == "__main__":
