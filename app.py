@@ -63,21 +63,102 @@ def users(page=1):
 
     return render_template('users.html', users=users, pages=pages, name=name, gender=gender, age=age)
 
-@app.route('/crm/orders')
-def orders():
-    return render_template('orders.html')
 
-@app.route('/crm/order_items')
-def order_items():
-    return render_template('orderitems.html')
+@app.route('/crm/orders')
+@app.route('/crm/orders/<int:page>')
+def orders(page=1):
+    per_page = 20
+    offset = per_page * (page - 1)
+
+    # 추후 검색 기능추가를 위해 작성
+    query = ""
+    params = ()
+
+    # 페이징을 위해 데이터의 개수 확인
+    count_query = "SELECT COUNT(*) AS 'Num' FROM orders" + query
+    data_num = get_query(count_query, params)[0]['Num']
+
+    # 페이지와 관련된 정보를 모두 받아오는 함수 - 딕셔너리로 반환
+    pages = get_current_page_info(page, data_num, per_page)
+
+    # 화면에 출력될 데이터 받아오기
+    select_query = "SELECT * FROM orders" + query + " LIMIT ? OFFSET ?"
+    orders = get_query(select_query, params + (per_page, offset))
+
+    return render_template('orders.html', orders=orders, pages=pages)
+
+
+@app.route('/crm/orderitems')
+@app.route('/crm/orderitems/<int:page>')
+def order_items(page=1):
+    per_page = 20
+    offset = per_page * (page - 1)
+    
+    # 추후 검색 기능 추가를 위해 작성
+    query = ""
+    params = ()
+
+    # 페이징을 위해 데이터의 개수 확인
+    count_query = "SELECT COUNT(*) AS 'Num' FROM orderitems" + query
+    data_num = get_query(count_query, params)[0]['Num']
+
+    # 페이지와 관련된 정보를 모두 받아오는 함수 - 딕셔너리로 반환
+    pages = get_current_page_info(page, data_num, per_page)
+
+    # 화면에 출력될 데이터 받아오기
+    select_query = "SELECT * FROM orderitems" + query + " LIMIT ? OFFSET ?"
+    orderitems = get_query(select_query, params + (per_page, offset))
+
+    return render_template('orderitems.html', orderitems=orderitems, pages=pages)
+
 
 @app.route('/crm/items')
-def items():
-    return render_template('items.html')
+@app.route('/crm/items/<int:page>')
+def items(page=1):
+    per_page = 20
+    offset = per_page * (page - 1)
+
+    # 추후 검색 기능 추가를 위해 작성
+    query = ""
+    params = ()
+
+    # 페이징을 위해 데이터의 개수 확인
+    count_query = "SELECT COUNT(*) AS 'Num' FROM items" + query
+    data_num = get_query(count_query, params)[0]['Num']
+
+    # 페이지와 관련된 정보를 모두 받아오는 함수 - 딕셔너리로 반환
+    pages = get_current_page_info(page, data_num, per_page)
+
+    # 화면에 출력될 데이터 받아오기
+    select_query = "SELECT * FROM items" + query + " LIMIT ? OFFSET ?"
+    items = get_query(select_query, params + (per_page, offset))
+
+    return render_template('items.html', items=items, pages=pages)
+
 
 @app.route('/crm/stores')
-def stores():
-    return render_template('stores.html')
+@app.route('/crm/stores/<int:page>')
+def stores(page=1):
+    per_page = 20
+    offset = per_page * (page - 1)
+
+    # 추후 검색 기능 추가를 위해 작성
+    query = ""
+    params = ()
+
+    # 페이징을 위해 데이터의 개수 확인
+    count_query = "SELECT COUNT(*) AS 'Num' FROM stores" + query
+    data_num = get_query(count_query, params)[0]['Num']
+
+    # 페이지와 관련된 정보를 모두 받아오는 함수 - 딕셔너리로 반환
+    pages = get_current_page_info(page, data_num, per_page)
+
+    # 화면에 출력될 데이터 받아오기
+    select_query = "SELECT * FROM stores" + query + " LIMIT ? OFFSET ?"
+    stores = get_query(select_query, params + (per_page, offset))
+
+    return render_template('stores.html', stores=stores, pages=pages)
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)

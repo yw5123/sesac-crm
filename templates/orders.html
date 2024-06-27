@@ -1,6 +1,40 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-
+<div>
+    <table class="datatable">
+        <tr>
+            <th>id</th>
+            <th>ordered_at</th>
+            <th>store_id</th>
+            <th>user_id</th>
+        </tr>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order['Id'] }}</td>                
+            <td>{{ order['OrderAt'] }}</td>                
+            <td>{{ order['StoreId'] }}</td>                
+            <td>{{ order['UserId'] }}</td>                
+        </tr>
+        {% endfor %}
+    </table>
+    {% if not orders %}
+        <h5 align="center">검색 결과가 없습니다</h5>
+    {% endif %}
+    <ul class="pagination">
+    {% if pages['prevPages'] %}
+        <li><a href="/crm/orders/{{ pages['pagelist'][0] - 1 }}">이전</a></li>
+    {% endif %}
+    {% for page in pages['pagelist'] %}
+        {% if page == pages['current'] %}
+        <li><a class="currentpage">{{ page }}</a></li>
+        {% else %}
+        <li><a href="/crm/orders/{{ page }}">{{ page }}</a></li>
+        {% endif %}
+    {% endfor %}
+    {% if pages['nextPages'] %}
+        <li><a href="/crm/orders/{{ pages['pagelist'][9] + 1 }}">다음</a></li>
+    {% endif %}
+    </ul>
+</div>
 {% endblock %}
