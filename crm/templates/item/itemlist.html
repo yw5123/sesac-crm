@@ -2,6 +2,9 @@
 
 {% block content %}
 <div>
+    <div class="datainfo">
+        <span>total: {{ pages['data_num'] }}</span>
+    </div>
     <table class="datatable">
         <tr>
             <th>id</th>
@@ -11,7 +14,7 @@
         </tr>
         {% for item in items %}
         <tr>
-            <td>{{ item['Id'] }}</td>                
+            <td><a href="./{{ item['Id'] }}">{{ item['Id'] }}</a></td>                
             <td>{{ item['Type'] }}</td>                
             <td>{{ item['Name'] }}</td>                
             <td>{{ item['UnitPrice'] }}</td>                

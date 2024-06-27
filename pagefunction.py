@@ -30,7 +30,8 @@ def get_current_page_info(currentpage, data_num, per_page):
         'last': lastpage,
         'pagelist': current_page_list,
         'prevPages': prevPages,
-        'nextPages': nextPages
+        'nextPages': nextPages,
+        'data_num': data_num
     }
 
     return pages

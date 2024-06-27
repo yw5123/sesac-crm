@@ -26,3 +26,10 @@ def orders(page=1):
     orders = get_query(select_query, params + (per_page, offset))
 
     return render_template('order/orderlist.html', orders=orders, pages=pages)
+
+@bp.route('/<id>')
+def order_detail(id):
+    query = "SELECT * FROM orders WHERE id = ?"
+    order = get_query(query, (id,))[0]
+
+    return render_template('order/orderdetail.html', order=order)

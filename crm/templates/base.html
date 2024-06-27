@@ -16,11 +16,17 @@
             top: 20px;
             left: 20px;
         }
+        nav span {
+            margin: 10px;
+            font-size: x-large;
+            font-weight: bold;
+            color: azure;
+        }
         nav a{
+            margin: 10px;
             font-size: larger;
             color: azure;
             text-decoration-line: none;
-            margin: 10px;
         }
         .content {
             padding-top: 70px;
@@ -29,8 +35,16 @@
             align-items: center;
         }
         .searchcontainer {
-            margin: 20px;
+            margin: 10px;
             text-align: center;
+        }
+        .pagetitle {
+            margin: 10px;
+            font-size: larger;
+            font-weight: bold;
+        }
+        .datainfo {
+            margin: 10px;
         }
         .datatable {
             width: 800px;
@@ -48,6 +62,13 @@
         }
         .datatable tr:not(:first-child):hover {
             background-color: aliceblue;
+        }
+        .datatable a {
+            text-decoration-line: none;
+            color: darkolivegreen;
+        }
+        .datatable a:hover {
+            text-decoration-line: underline;
         }
         .pagination {
             padding-top: 10px;
@@ -71,6 +92,7 @@
 <body>
     <header>
         <nav>
+            <span>CRM</span>
             <a href="{{ url_for('user.users') }}">User</a>
             <a href="{{ url_for('order.orders') }}">Order</a>
             <a href="{{ url_for('orderitem.order_items') }}">Order-Item</a>

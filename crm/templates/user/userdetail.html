@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+    <p class="pagetitle">고객 정보</p>
+    <table class="datatable">
+        <tr>
+            <th>name</th>
+            <th>gender</th>
+            <th>age</th>
+            <th>birthday</th>
+            <th>address</th>
+        </tr>
+        <tr>
+            <td>{{ user['Name'] }}</td>                
+            <td>{{ user['Gender'] }}</td>                
+            <td>{{ user['Age'] }}</td>                
+            <td>{{ user['Birthdate'] }}</td>                
+            <td>{{ user['Address'] }}</td>                
+        </tr>
+    </table>
+</div>
+{% endblock %}

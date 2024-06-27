@@ -61,3 +61,11 @@ def users(page=1):
     users = get_query(select_query, params + (per_page, offset))
 
     return render_template('user/userlist.html', users=users, pages=pages, name=name, gender=gender, age=age)
+
+
+@bp.route('/<id>')
+def user_detail(id):
+    query = "SELECT * FROM users WHERE id = ?"
+    user = get_query(query, (id,))[0]
+
+    return render_template('user/userdetail.html', user=user)

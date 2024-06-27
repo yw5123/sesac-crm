@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+    <p class="pagetitle">상품 정보</p>
+    <table class="datatable">
+        <tr>
+            <th>name</th>
+            <th>type</th>
+            <th>unit_price</th>
+        </tr>
+        <tr>
+            <td>{{ item['Name'] }}</td>                
+            <td>{{ item['Type'] }}</td>                             
+            <td>{{ item['UnitPrice'] }}</td>                
+        </tr>
+    </table>
+</div>
+{% endblock %}

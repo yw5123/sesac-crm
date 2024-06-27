@@ -26,3 +26,10 @@ def stores(page=1):
     stores = get_query(select_query, params + (per_page, offset))
 
     return render_template('store/storelist.html', stores=stores, pages=pages)
+
+@bp.route('/<id>')
+def store_detail(id):
+    query = "SELECT * FROM stores WHERE id = ?"
+    store = get_query(query, (id,))[0]
+
+    return render_template('/store/storedetail.html', store=store)

@@ -2,6 +2,9 @@
 
 {% block content %}
 <div>
+    <div class="datainfo">
+        <span>total: {{ pages['data_num'] }}</span>
+    </div>
     <table class="datatable">
         <tr>
             <th>id</th>
@@ -11,7 +14,7 @@
         </tr>
         {% for store in stores %}
         <tr>
-            <td>{{ store['Id'] }}</td>                
+            <td><a href="./{{ store['Id'] }}">{{ store['Id'] }}</a></td>                
             <td>{{ store['Type'] }}</td>                
             <td>{{ store['Name'] }}</td>                
             <td>{{ store['Address'] }}</td>                
