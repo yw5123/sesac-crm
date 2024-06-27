@@ -7,33 +7,33 @@
             <th>id</th>
             <th>type</th>
             <th>name</th>
-            <th>unit_price</th>
+            <th>address</th>
         </tr>
-        {% for item in items %}
+        {% for store in stores %}
         <tr>
-            <td>{{ item['Id'] }}</td>                
-            <td>{{ item['Type'] }}</td>                
-            <td>{{ item['Name'] }}</td>                
-            <td>{{ item['UnitPrice'] }}</td>                
+            <td>{{ store['Id'] }}</td>                
+            <td>{{ store['Type'] }}</td>                
+            <td>{{ store['Name'] }}</td>                
+            <td>{{ store['Address'] }}</td>                
         </tr>
         {% endfor %}
     </table>
-    {% if not items %}
+    {% if not stores %}
         <h5 align="center">검색 결과가 없습니다</h5>
     {% endif %}
     <ul class="pagination">
     {% if pages['prevPages'] %}
-        <li><a href="/crm/items/{{ pages['pagelist'][0] - 1 }}">이전</a></li>
+        <li><a href="./{{ pages['pagelist'][0] - 1 }}">이전</a></li>
     {% endif %}
     {% for page in pages['pagelist'] %}
         {% if page == pages['current'] %}
         <li><a class="currentpage">{{ page }}</a></li>
         {% else %}
-        <li><a href="/crm/items/{{ page }}">{{ page }}</a></li>
+        <li><a href="./{{ page }}">{{ page }}</a></li>
         {% endif %}
     {% endfor %}
     {% if pages['nextPages'] %}
-        <li><a href="/crm/items/{{ pages['pagelist'][9] + 1 }}">다음</a></li>
+        <li><a href="./{{ pages['pagelist'][9] + 1 }}">다음</a></li>
     {% endif %}
     </ul>
 </div>

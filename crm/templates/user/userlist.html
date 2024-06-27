@@ -2,7 +2,7 @@
 
 {% block content %}
 <div>
-    <form action="/crm/users" class="searchcontainer">
+    <form action="{{ url_for('user.users') }}" class="searchcontainer">
         <input type="text" name="name" placeholder="name" value="{{ name if name != '' }}">
         <select name="gender" style="text-align: center;">
             <option selected hidden value="{{ gender or '' }}">{{ gender or 'gender' }}</option>
@@ -36,17 +36,17 @@
     {% endif %}
     <ul class="pagination">
     {% if pages['prevPages'] %}
-        <li><a href="/crm/users/{{ pages['pagelist'][0] - 1 }}?name={{ name or '' }}&gender={{ gender or ''}}&age={{ age or ''}}">이전</a></li>
+        <li><a href="./{{ pages['pagelist'][0] - 1 }}?name={{ name or '' }}&gender={{ gender or ''}}&age={{ age or ''}}">이전</a></li>
     {% endif %}
     {% for page in pages['pagelist'] %}
         {% if page == pages['current'] %}
         <li><a class="currentpage">{{ page }}</a></li>
         {% else %}
-        <li><a href="/crm/users/{{ page }}?name={{ name or '' }}&gender={{ gender or ''}}&age={{ age or ''}}">{{ page }}</a></li>
+        <li><a href="./{{ page }}?name={{ name or '' }}&gender={{ gender or ''}}&age={{ age or ''}}">{{ page }}</a></li>
         {% endif %}
     {% endfor %}
     {% if pages['nextPages'] %}
-        <li><a href="/crm/users/{{ pages['pagelist'][9] + 1 }}?name={{ name or '' }}&gender={{ gender or ''}}&age={{ age or ''}}">다음</a></li>
+        <li><a href="./{{ pages['pagelist'][9] + 1 }}?name={{ name or '' }}&gender={{ gender or ''}}&age={{ age or ''}}">다음</a></li>
     {% endif %}
     </ul>
 </div>

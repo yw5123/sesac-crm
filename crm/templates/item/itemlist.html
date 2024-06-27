@@ -5,33 +5,35 @@
     <table class="datatable">
         <tr>
             <th>id</th>
-            <th>order_id</th>
-            <th>item_id</th>
+            <th>type</th>
+            <th>name</th>
+            <th>unit_price</th>
         </tr>
-        {% for orderitem in orderitems %}
+        {% for item in items %}
         <tr>
-            <td>{{ orderitem['Id'] }}</td>                
-            <td>{{ orderitem['OrderId'] }}</td>                
-            <td>{{ orderitem['ItemId'] }}</td>                
+            <td>{{ item['Id'] }}</td>                
+            <td>{{ item['Type'] }}</td>                
+            <td>{{ item['Name'] }}</td>                
+            <td>{{ item['UnitPrice'] }}</td>                
         </tr>
         {% endfor %}
     </table>
-    {% if not orderitems %}
+    {% if not items %}
         <h5 align="center">검색 결과가 없습니다</h5>
     {% endif %}
     <ul class="pagination">
     {% if pages['prevPages'] %}
-        <li><a href="/crm/orderitems/{{ pages['pagelist'][0] - 1 }}">이전</a></li>
+        <li><a href="./{{ pages['pagelist'][0] - 1 }}">이전</a></li>
     {% endif %}
     {% for page in pages['pagelist'] %}
         {% if page == pages['current'] %}
         <li><a class="currentpage">{{ page }}</a></li>
         {% else %}
-        <li><a href="/crm/orderitems/{{ page }}">{{ page }}</a></li>
+        <li><a href="./{{ page }}">{{ page }}</a></li>
         {% endif %}
     {% endfor %}
     {% if pages['nextPages'] %}
-        <li><a href="/crm/orderitems/{{ pages['pagelist'][9] + 1 }}">다음</a></li>
+        <li><a href="./{{ pages['pagelist'][9] + 1 }}">다음</a></li>
     {% endif %}
     </ul>
 </div>
