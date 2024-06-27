@@ -52,7 +52,7 @@ def users(page=1):
 
     # 검색 결과가 없는 경우 예외 처리
     if data_num == 0:
-        return render_template('users.html', users="", pages="")
+        return render_template('userlist.html', users="", pages="")
     
     # 페이지와 관련된 정보를 모두 받아오는 함수 - 딕셔너리로 반환
     pages = get_current_page_info(page, data_num, per_page)
@@ -61,7 +61,7 @@ def users(page=1):
     select_query = "SELECT * FROM users" + query + " LIMIT ? OFFSET ?"
     users = get_query(select_query, params + (per_page, offset))
 
-    return render_template('users.html', users=users, pages=pages, name=name, gender=gender, age=age)
+    return render_template('userlist.html', users=users, pages=pages, name=name, gender=gender, age=age)
 
 
 @app.route('/crm/orders')
@@ -85,7 +85,7 @@ def orders(page=1):
     select_query = "SELECT * FROM orders" + query + " LIMIT ? OFFSET ?"
     orders = get_query(select_query, params + (per_page, offset))
 
-    return render_template('orders.html', orders=orders, pages=pages)
+    return render_template('orderlist.html', orders=orders, pages=pages)
 
 
 @app.route('/crm/orderitems')
@@ -109,7 +109,7 @@ def order_items(page=1):
     select_query = "SELECT * FROM orderitems" + query + " LIMIT ? OFFSET ?"
     orderitems = get_query(select_query, params + (per_page, offset))
 
-    return render_template('orderitems.html', orderitems=orderitems, pages=pages)
+    return render_template('orderitemlist.html', orderitems=orderitems, pages=pages)
 
 
 @app.route('/crm/items')
@@ -133,7 +133,7 @@ def items(page=1):
     select_query = "SELECT * FROM items" + query + " LIMIT ? OFFSET ?"
     items = get_query(select_query, params + (per_page, offset))
 
-    return render_template('items.html', items=items, pages=pages)
+    return render_template('itemlist.html', items=items, pages=pages)
 
 
 @app.route('/crm/stores')
@@ -157,7 +157,7 @@ def stores(page=1):
     select_query = "SELECT * FROM stores" + query + " LIMIT ? OFFSET ?"
     stores = get_query(select_query, params + (per_page, offset))
 
-    return render_template('stores.html', stores=stores, pages=pages)
+    return render_template('storelist.html', stores=stores, pages=pages)
 
 
 if __name__ == "__main__":
