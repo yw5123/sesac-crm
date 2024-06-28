@@ -14,7 +14,7 @@
         {% for orderitem in orderitems %}
         <tr>
             <td>{{ orderitem['Id'] }}</td>                
-            <td>{{ orderitem['OrderId'] }}</td>                
+            <td><a href="../orders/{{ orderitem['OrderId'] }}">{{ orderitem['OrderId'] }}</a></td>                
             <td><a href="../items/{{ orderitem['ItemId'] }}">{{ orderitem['ItemId'] }}</a></td>                
         </tr>
         {% endfor %}

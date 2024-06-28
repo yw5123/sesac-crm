@@ -19,5 +19,20 @@
             <td>{{ user['Address'] }}</td>                
         </tr>
     </table>
+    <p class="pagetitle" style="padding-top: 30px;">주문 정보</p>
+    <table class="datatable">
+        <tr>
+            <th>order id</th>
+            <th>purchased date</th>
+            <th>purchaed store</th>
+        </tr>
+        {% for orderinfo in orderinfos %}
+        <tr>
+            <td><a href="../orders/{{ orderinfo['OrderId'] }}">{{ orderinfo['OrderId'] }}</a></td>                
+            <td>{{ orderinfo['OrderAt'] }}</td>                
+            <td><a href="../stores/{{ orderinfo['StoreId'] }}">{{ orderinfo['StoreName'] }}</a></td>                              
+        </tr>
+        {% endfor %}
+    </table>
 </div>
 {% endblock %}

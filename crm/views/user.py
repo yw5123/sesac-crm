@@ -57,7 +57,7 @@ def users(page=1):
     pages = get_current_page_info(page, data_num, per_page)
 
     # 화면에 출력될 데이터 받아오기
-    select_query = "SELECT * FROM users" + query + " LIMIT ? OFFSET ?"
+    select_query = "SELECT id, name, gender, age FROM users" + query + " LIMIT ? OFFSET ?"
     users = get_query(select_query, params + (per_page, offset))
 
     return render_template('user/userlist.html', users=users, pages=pages, name=name, gender=gender, age=age)
@@ -68,4 +68,10 @@ def user_detail(id):
     query = "SELECT * FROM users WHERE id = ?"
     user = get_query(query, (id,))[0]
 
-    return render_template('user/userdetail.html', user=user)
+    query = '''SELECT o.id AS OrderId, o.OrderAt AS OrderAt, s.id AS StoreId, s.Name AS StoreName
+                FROM users u JOIN orders o ON u.id = o.userid
+                JOIN stores s ON o.storeid = s.id
+                WHERE u.id = ?'''
+    orderinfos = get_query(query, (id,))
+
+    return render_template('user/userdetail.html', user=user, orderinfos=orderinfos)
