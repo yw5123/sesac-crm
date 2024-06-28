@@ -15,5 +15,22 @@
             <td>{{ item['UnitPrice'] }}</td>                
         </tr>
     </table>
+    <p class="pagetitle" style="padding-top: 30px;">월간 매출액</p>
+    <table class="datatable">
+        <tr>
+            <th>월</th>
+            <th>주문 수</th>
+            <th>판매량</th>
+            <th>매출액</th>
+        </tr>
+        {% for orderinfo in orderinfos %}
+        <tr>
+            <td>{{ orderinfo['Month'] }}</td>                
+            <td>{{ orderinfo['OrderCount'] }}</td>                              
+            <td>{{ orderinfo['ItemCount'] }}</td>                              
+            <td>{{ orderinfo['Total'] }}원</td>                
+        </tr>
+        {% endfor %}
+    </table>
 </div>
 {% endblock %}
