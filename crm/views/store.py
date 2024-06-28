@@ -32,4 +32,11 @@ def store_detail(id):
     query = "SELECT * FROM stores WHERE id = ?"
     store = get_query(query, (id,))[0]
 
-    return render_template('/store/storedetail.html', store=store)
+    query = '''SELECT strftime('%Y-%m', o.OrderAt) AS Month, COUNT(DISTINCT o.Id) AS OrderCount, COUNT(i.Id) AS ItemCount, SUM(i.UnitPrice) AS Total
+                FROM stores s JOIN orders o ON s.Id = o.StoreId
+                JOIN orderitems oi ON o.Id = oi.OrderId
+                JOIN items i ON oi.ItemId = i.Id
+                WHERE s.id = ? GROUP BY Month'''
+    orderinfos = get_query(query, (id,))
+
+    return render_template('/store/storedetail.html', store=store, orderinfos=orderinfos)
