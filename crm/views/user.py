@@ -51,7 +51,7 @@ def users(page=1):
 
     # 검색 결과가 없는 경우 예외 처리
     if data_num == 0:
-        return render_template('user/userlist.html', users="", pages="")
+        return render_template('user/userlist.html', users="", pages="", name=name, gender=gender, age=age)
     
     # 페이지와 관련된 정보를 모두 받아오는 함수 - 딕셔너리로 반환
     pages = get_current_page_info(page, data_num, per_page)
