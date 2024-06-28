@@ -5,11 +5,11 @@
     <p class="pagetitle">고객 정보</p>
     <table class="datatable">
         <tr>
-            <th>name</th>
-            <th>gender</th>
-            <th>age</th>
-            <th>birthday</th>
-            <th>address</th>
+            <th>이름</th>
+            <th>성별</th>
+            <th>나이</th>
+            <th>생년월일</th>
+            <th>주소</th>
         </tr>
         <tr>
             <td>{{ user['Name'] }}</td>                
@@ -22,9 +22,9 @@
     <p class="pagetitle" style="padding-top: 30px;">주문 정보</p>
     <table class="datatable">
         <tr>
-            <th>order id</th>
-            <th>purchased date</th>
-            <th>purchaed store</th>
+            <th>주문 번호</th>
+            <th>구매일시</th>
+            <th>매장</th>
         </tr>
         {% for orderinfo in orderinfos %}
         <tr>
