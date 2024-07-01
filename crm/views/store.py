@@ -39,4 +39,10 @@ def store_detail(id):
                 WHERE s.id = ? GROUP BY Month'''
     orderinfos = get_query(query, (id,))
 
-    return render_template('/store/storedetail.html', store=store, orderinfos=orderinfos)
+    query = '''SELECT COUNT(u.id) AS NumVisits, u.name AS Name
+                FROM stores s JOIN orders o ON s.id = o.storeid
+                JOIN users u ON o.userid = u.id
+                WHERE s.id = ? GROUP BY u.id ORDER BY NumVisits DESC LIMIT 10'''
+    userinfos = get_query(query, (id,))
+
+    return render_template('/store/storedetail.html', store=store, orderinfos=orderinfos, userinfos=userinfos)

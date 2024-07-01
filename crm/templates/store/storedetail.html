@@ -32,5 +32,11 @@
         </tr>
         {% endfor %}
     </table>
+    <p class="pagetitle" style="padding-top: 30px;">단골 고객</p>
+    <ol class="top5">
+        {% for userinfo in userinfos %}
+            <li>{{ userinfo['Name'] }} - {{ userinfo['NumVisits'] }}번 방문</li>
+        {% endfor %}    
+    </ol>
 </div>
 {% endblock %}
