@@ -11,8 +11,29 @@
         </tr>
         <tr>
             <td>{{ order['OrderAt'] }}</td>                             
-            <td>{{ order['StoreId'] }}</td>                
-            <td>{{ order['UserId'] }}</td>                
+            <td><a href="../stores/{{ order['StoreId'] }}">{{ order['StoreName'] }}</a></td>                
+            <td><a href="../users/{{ order['UserId'] }}">{{ order['UserName'] }}</a></td>                
+        </tr>
+    </table>
+    <p class="pagetitle" style="padding-top: 30px;">세부 주문내역</p>
+    <table class="datatable">
+        <tr>
+            <th>상품 id</th>
+            <th>카테고리</th>
+            <th>상품명</th>
+            <th>가격</th>
+        </tr>
+        {% for orderinfo in orderinfos %}
+        <tr>
+            <td>{{ orderinfo['ItemId'] }}</td>                
+            <td>{{ orderinfo['ItemType'] }}</td>                              
+            <td>{{ orderinfo['ItemName'] }}</td>                              
+            <td>{{ orderinfo['ItemPrice'] }}원</td>                
+        </tr>
+        {% endfor %}
+        <tr>
+            <td>총 결제 금액</td>
+            <td colspan="3">{{ total }}원</td>
         </tr>
     </table>
 </div>

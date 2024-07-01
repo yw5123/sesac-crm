@@ -22,14 +22,30 @@ def orders(page=1):
     pages = get_current_page_info(page, data_num, per_page)
 
     # 화면에 출력될 데이터 받아오기
-    select_query = "SELECT * FROM orders" + query + " LIMIT ? OFFSET ?"
+    select_query = '''SELECT o.Id AS Id, o.OrderAt AS OrderAt, u.Name AS UserName, S.Name AS StoreName
+                FROM orders o JOIN users u ON o.userid = u.id
+                JOIN stores s ON o.storeid = s.id''' + query + " LIMIT ? OFFSET ?"
     orders = get_query(select_query, params + (per_page, offset))
 
     return render_template('order/orderlist.html', orders=orders, pages=pages)
 
 @bp.route('/<id>')
 def order_detail(id):
-    query = "SELECT * FROM orders WHERE id = ?"
+    query = '''SELECT o.Id AS Id, o.OrderAt AS OrderAt, o.UserId AS UserId, o.StoreId AS StoreId, u.Name AS UserName, s.Name AS StoreName
+            FROM orders o JOIN users u ON o.userid = u.id
+            JOIN stores s ON o.storeid = s.id WHERE o.id = ?'''
     order = get_query(query, (id,))[0]
 
-    return render_template('order/orderdetail.html', order=order)
+    query = '''SELECT i.Id AS ItemId, i.Type AS ItemType, i.Name AS ItemName, i.UnitPrice AS ItemPrice
+            FROM orders o JOIN orderitems oi ON o.Id = oi.OrderId
+            JOIN items i ON oi.ItemId = i.Id
+            WHERE o.id = ?'''
+    orderinfos = get_query(query, (id,))
+
+    query = '''SELECT SUM(i.UnitPrice) AS Total
+            FROM orders o JOIN orderitems oi ON o.Id = oi.OrderId
+            JOIN items i ON oi.ItemId = i.Id
+            WHERE o.id = ?'''
+    total = get_query(query, (id,))[0]['Total']
+
+    return render_template('order/orderdetail.html', order=order, orderinfos=orderinfos, total=total)
