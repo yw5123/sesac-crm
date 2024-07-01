@@ -10,9 +10,16 @@ def items(page=1):
     per_page = 20
     offset = per_page * (page - 1)
 
-    # 추후 검색 기능 추가를 위해 작성
-    query = ""
-    params = ()
+    # 검색창에 입력된 값 저장
+    name = request.args.get("name")
+
+    # 입력된 항목 확인하고 그에 맞는 query와 params 설정
+    if name:
+        query = " WHERE name LIKE ?"
+        params = ('%' + name + '%',)
+    else:
+        query = ""
+        params = ()
 
     # 페이징을 위해 데이터의 개수 확인
     count_query = "SELECT COUNT(*) AS 'Num' FROM items" + query
