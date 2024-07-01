@@ -74,4 +74,17 @@ def user_detail(id):
                 WHERE u.id = ?'''
     orderinfos = get_query(query, (id,))
 
-    return render_template('user/userdetail.html', user=user, orderinfos=orderinfos)
+    query = '''SELECT COUNT(s.id) AS NumVisits, s.name AS Name
+                FROM users u JOIN orders o ON u.id = o.userid
+                JOIN stores s ON o.storeid = s.id
+                WHERE u.id = ? GROUP BY s.id ORDER BY NumVisits DESC LIMIT 5'''
+    storeinfos = get_query(query, (id,))
+    
+    query = '''SELECT COUNT(i.id) AS NumOrders, i.name AS Name
+                FROM users u JOIN orders o ON u.id = o.userid
+                JOIN orderitems oi ON o.id = oi.orderid
+                JOIN items i ON oi.itemid = i.id
+                WHERE u.id = ? GROUP BY i.id ORDER BY NumOrders DESC LIMIT 5'''
+    iteminfos = get_query(query, (id,))
+
+    return render_template('user/userdetail.html', user=user, orderinfos=orderinfos, storeinfos=storeinfos, iteminfos=iteminfos)

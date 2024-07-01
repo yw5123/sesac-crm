@@ -34,5 +34,17 @@
         </tr>
         {% endfor %}
     </table>
+    <p class="pagetitle" style="padding-top: 30px;">많이 방문한 매장</p>
+    <ol class="top5">
+        {% for storeinfo in storeinfos %}
+            <li>{{ storeinfo['Name'] }} - {{ storeinfo['NumVisits'] }}번 방문</li>
+        {% endfor %}    
+    </ol>
+    <p class="pagetitle" style="padding-top: 30px;">많이 주문한 상품</p>
+    <ol class="top5">
+        {% for iteminfo in iteminfos %}
+            <li>{{ iteminfo['Name'] }} - {{ iteminfo['NumOrders'] }}번 주문</li>
+        {% endfor %}    
+    </ol>
 </div>
 {% endblock %}
