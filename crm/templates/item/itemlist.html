@@ -30,17 +30,17 @@
     {% endif %}
     <ul class="pagination">
     {% if pages['prevPages'] %}
-        <li><a href="./{{ pages['pagelist'][0] - 1 }}">이전</a></li>
+        <li><a href="./{{ pages['pagelist'][0] - 1 }}?name={{ name or '' }}">이전</a></li>
     {% endif %}
     {% for page in pages['pagelist'] %}
         {% if page == pages['current'] %}
         <li><a class="currentpage">{{ page }}</a></li>
         {% else %}
-        <li><a href="./{{ page }}">{{ page }}</a></li>
+        <li><a href="./{{ page }}?name={{ name or '' }}">{{ page }}</a></li>
         {% endif %}
     {% endfor %}
     {% if pages['nextPages'] %}
-        <li><a href="./{{ pages['pagelist'][9] + 1 }}">다음</a></li>
+        <li><a href="./{{ pages['pagelist'][9] + 1 }}?name={{ name or '' }}">다음</a></li>
     {% endif %}
     </ul>
 </div>

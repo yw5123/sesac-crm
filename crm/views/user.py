@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, url_for, request
+from flask import Blueprint, render_template, redirect, url_for, request, flash
 from database import get_query
 from pagefunction import get_current_page_info
 
@@ -49,13 +49,18 @@ def users(page=1):
     count_query = "SELECT COUNT(*) AS 'Num' FROM users" + query
     data_num = get_query(count_query, params)[0]['Num']
 
+    # 페이지와 관련된 정보를 모두 받아오는 함수 - 딕셔너리로 반환
+    pages = get_current_page_info(page, data_num, per_page)
+
+    # 파라미터에 마지막페이지보다 큰 값을 넣었을 경우 예외 처리
+    if pages['current'] > pages['last']:
+        flash('임의로 URL을 변경하지 마시오.', 'warning')
+        return redirect(url_for('user.users'))
+
     # 검색 결과가 없는 경우 예외 처리
     if data_num == 0:
         return render_template('user/userlist.html', users="", pages="", name=name, gender=gender, age=age)
     
-    # 페이지와 관련된 정보를 모두 받아오는 함수 - 딕셔너리로 반환
-    pages = get_current_page_info(page, data_num, per_page)
-
     # 화면에 출력될 데이터 받아오기
     select_query = "SELECT id, name, gender, age FROM users" + query + " LIMIT ? OFFSET ?"
     users = get_query(select_query, params + (per_page, offset))
@@ -66,7 +71,11 @@ def users(page=1):
 @bp.route('/<id>')
 def user_detail(id):
     query = "SELECT * FROM users WHERE id = ?"
-    user = get_query(query, (id,))[0]
+    try:
+        user = get_query(query, (id,))[0]
+    except IndexError:
+        flash('임의로 URL을 변경하지 마시오.', 'warning')
+        return redirect(url_for('user.users'))
 
     query = '''SELECT o.id AS OrderId, o.OrderAt AS OrderAt, s.id AS StoreId, s.Name AS StoreName
                 FROM users u JOIN orders o ON u.id = o.userid

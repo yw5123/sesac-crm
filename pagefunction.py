@@ -1,7 +1,11 @@
 import math
 
 def get_current_page_info(currentpage, data_num, per_page):
-    lastpage = math.ceil(data_num / per_page)
+    if data_num == 0:
+        lastpage = 1
+    else:
+        lastpage = math.ceil(data_num / per_page)
+
     current_page_list = []
     current_10 = (currentpage - 1) // 10
 
