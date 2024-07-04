@@ -59,13 +59,23 @@ def users(page=1):
 
     # 검색 결과가 없는 경우 예외 처리
     if data_num == 0:
-        return render_template('user/userlist.html', users="", pages="", name=name, gender=gender, age=age)
+        return render_template('user/userlist.html', 
+                               users="", 
+                               pages="", 
+                               name=name, 
+                               gender=gender, 
+                               age=age)
     
     # 화면에 출력될 데이터 받아오기
     select_query = "SELECT id, name, gender, age FROM users" + query + " LIMIT ? OFFSET ?"
     users = get_query(select_query, params + (per_page, offset))
 
-    return render_template('user/userlist.html', users=users, pages=pages, name=name, gender=gender, age=age)
+    return render_template('user/userlist.html', 
+                           users=users, 
+                           pages=pages, 
+                           name=name, 
+                           gender=gender, 
+                           age=age)
 
 
 @bp.route('/<id>')
@@ -96,4 +106,8 @@ def user_detail(id):
                 WHERE u.id = ? GROUP BY i.id ORDER BY NumOrders DESC LIMIT 5'''
     iteminfos = get_query(query, (id,))
 
-    return render_template('user/userdetail.html', user=user, orderinfos=orderinfos, storeinfos=storeinfos, iteminfos=iteminfos)
+    return render_template('user/userdetail.html', 
+                           user=user, 
+                           orderinfos=orderinfos, 
+                           storeinfos=storeinfos, 
+                           iteminfos=iteminfos)

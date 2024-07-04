@@ -25,4 +25,6 @@ def order_items(page=1):
     select_query = "SELECT * FROM orderitems" + query + " LIMIT ? OFFSET ?"
     orderitems = get_query(select_query, params + (per_page, offset))
 
-    return render_template('orderitem/orderitemlist.html', orderitems=orderitems, pages=pages)
+    return render_template('orderitem/orderitemlist.html', 
+                           orderitems=orderitems, 
+                           pages=pages)

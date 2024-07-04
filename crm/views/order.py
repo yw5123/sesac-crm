@@ -28,7 +28,9 @@ def orders(page=1):
 
     # 검색 결과가 없는 경우 예외 처리
     if data_num == 0:
-        return render_template('order/orderlist.html', orders="", pages="")
+        return render_template('order/orderlist.html', 
+                               orders="", 
+                               pages="")
 
     # 화면에 출력될 데이터 받아오기
     select_query = '''SELECT o.Id AS Id, o.OrderAt AS OrderAt, u.Name AS UserName, S.Name AS StoreName
@@ -36,7 +38,9 @@ def orders(page=1):
                 JOIN stores s ON o.storeid = s.id''' + query + " LIMIT ? OFFSET ?"
     orders = get_query(select_query, params + (per_page, offset))
 
-    return render_template('order/orderlist.html', orders=orders, pages=pages)
+    return render_template('order/orderlist.html', 
+                           orders=orders, 
+                           pages=pages)
 
 @bp.route('/<id>')
 def order_detail(id):
@@ -61,4 +65,7 @@ def order_detail(id):
             WHERE o.id = ?'''
     total = get_query(query, (id,))[0]['Total']
 
-    return render_template('order/orderdetail.html', order=order, orderinfos=orderinfos, total=total)
+    return render_template('order/orderdetail.html', 
+                           order=order, 
+                           orderinfos=orderinfos, 
+                           total=total)

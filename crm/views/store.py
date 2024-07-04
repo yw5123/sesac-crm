@@ -39,13 +39,19 @@ def stores(page=1):
 
     # 검색 결과가 없는 경우 예외 처리
     if data_num == 0:
-        return render_template('store/storelist.html', stores="", pages="", name=name)
+        return render_template('store/storelist.html', 
+                               stores="", 
+                               pages="", 
+                               name=name)
 
     # 화면에 출력될 데이터 받아오기
     select_query = "SELECT * FROM stores" + query + " LIMIT ? OFFSET ?"
     stores = get_query(select_query, params + (per_page, offset))
 
-    return render_template('store/storelist.html', stores=stores, pages=pages, name=name)
+    return render_template('store/storelist.html', 
+                           stores=stores, 
+                           pages=pages, 
+                           name=name)
 
 @bp.route('/<id>')
 def store_detail(id):
@@ -69,4 +75,7 @@ def store_detail(id):
                 WHERE s.id = ? GROUP BY u.id ORDER BY NumVisits DESC LIMIT 10'''
     userinfos = get_query(query, (id,))
 
-    return render_template('/store/storedetail.html', store=store, orderinfos=orderinfos, userinfos=userinfos)
+    return render_template('/store/storedetail.html', 
+                           store=store, 
+                           orderinfos=orderinfos, 
+                           userinfos=userinfos)

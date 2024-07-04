@@ -39,13 +39,19 @@ def items(page=1):
 
     # 검색 결과가 없는 경우 예외 처리
     if data_num == 0:
-        return render_template('item/itemlist.html', items="", pages="", name=name)
+        return render_template('item/itemlist.html', 
+                               items="", 
+                               pages="", 
+                               name=name)
 
     # 화면에 출력될 데이터 받아오기
     select_query = "SELECT * FROM items" + query + " LIMIT ? OFFSET ?"
     items = get_query(select_query, params + (per_page, offset))
 
-    return render_template('item/itemlist.html', items=items, pages=pages, name=name)
+    return render_template('item/itemlist.html', 
+                           items=items, 
+                           pages=pages, 
+                           name=name)
 
 @bp.route('/<id>')
 def item_detail(id):
@@ -62,4 +68,6 @@ def item_detail(id):
                 WHERE i.id = ? GROUP BY Month'''
     orderinfos = get_query(query, (id,))
 
-    return render_template('item/itemdetail.html', item=item, orderinfos=orderinfos)
+    return render_template('item/itemdetail.html', 
+                           item=item, 
+                           orderinfos=orderinfos)
