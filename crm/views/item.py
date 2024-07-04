@@ -34,7 +34,7 @@ def items(page=1):
 
     # 파라미터에 마지막페이지보다 큰 값을 넣었을 경우 예외 처리
     if pages['current'] > pages['last']:
-        flash('임의로 URL을 변경하지 마시오.', 'warning')
+        flash('올바르지 않은 입력값입니다.', 'warning')
         return redirect(url_for('item.items'))
 
     # 검색 결과가 없는 경우 예외 처리
@@ -55,13 +55,15 @@ def items(page=1):
 
 @bp.route('/<id>')
 def item_detail(id):
+    # item 기본 정보 - 파라미터를 통해 임의의 값을 넣었을 경우에 대한 예외 처리
     query = "SELECT * FROM items WHERE id = ?"
     try:
         item = get_query(query, (id,))[0]
     except IndexError:
-        flash('임의로 URL을 변경하지 마시오.', 'warning')
+        flash('올바르지 않은 입력값입니다.', 'warning')
         return redirect(url_for('item.items'))
 
+    # 해당 item의 월간 매출액
     query = '''SELECT strftime('%Y-%m', o.OrderAt) AS Month, COUNT(DISTINCT o.Id) AS OrderCount, COUNT(i.Id) AS ItemCount, SUM(i.UnitPrice) AS Total
                 FROM items i JOIN orderitems oi ON i.Id = oi.ItemId
                 JOIN orders o ON oi.OrderId = o.Id

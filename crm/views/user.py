@@ -54,7 +54,7 @@ def users(page=1):
 
     # 파라미터에 마지막페이지보다 큰 값을 넣었을 경우 예외 처리
     if pages['current'] > pages['last']:
-        flash('임의로 URL을 변경하지 마시오.', 'warning')
+        flash('올바르지 않은 입력값입니다.', 'warning')
         return redirect(url_for('user.users'))
 
     # 검색 결과가 없는 경우 예외 처리
@@ -65,40 +65,44 @@ def users(page=1):
                                name=name, 
                                gender=gender, 
                                age=age)
-    
-    # 화면에 출력될 데이터 받아오기
-    select_query = "SELECT id, name, gender, age FROM users" + query + " LIMIT ? OFFSET ?"
-    users = get_query(select_query, params + (per_page, offset))
+    else:
+        # 화면에 출력될 데이터 받아오기
+        select_query = "SELECT id, name, gender, age FROM users" + query + " LIMIT ? OFFSET ?"
+        users = get_query(select_query, params + (per_page, offset))
 
-    return render_template('user/userlist.html', 
-                           users=users, 
-                           pages=pages, 
-                           name=name, 
-                           gender=gender, 
-                           age=age)
+        return render_template('user/userlist.html', 
+                            users=users, 
+                            pages=pages, 
+                            name=name, 
+                            gender=gender, 
+                            age=age)
 
 
 @bp.route('/<id>')
 def user_detail(id):
+    # user 기본 정보 - 파라미터를 통해 임의의 값을 넣었을 경우에 대한 예외 처리
     query = "SELECT * FROM users WHERE id = ?"
     try:
         user = get_query(query, (id,))[0]
-    except IndexError:
-        flash('임의로 URL을 변경하지 마시오.', 'warning')
+    except IndexError: 
+        flash('올바르지 않은 입력값입니다.', 'warning')
         return redirect(url_for('user.users'))
 
+    # 해당 user의 주문 정보
     query = '''SELECT o.id AS OrderId, o.OrderAt AS OrderAt, s.id AS StoreId, s.Name AS StoreName
                 FROM users u JOIN orders o ON u.id = o.userid
                 JOIN stores s ON o.storeid = s.id
                 WHERE u.id = ?'''
     orderinfos = get_query(query, (id,))
 
+    # 해당 user가 많이 방문한 매장 top5
     query = '''SELECT COUNT(s.id) AS NumVisits, s.name AS Name
                 FROM users u JOIN orders o ON u.id = o.userid
                 JOIN stores s ON o.storeid = s.id
                 WHERE u.id = ? GROUP BY s.id ORDER BY NumVisits DESC LIMIT 5'''
     storeinfos = get_query(query, (id,))
     
+    # 해당 user가 많이 주문한 상품 top5
     query = '''SELECT COUNT(i.id) AS NumOrders, i.name AS Name
                 FROM users u JOIN orders o ON u.id = o.userid
                 JOIN orderitems oi ON o.id = oi.orderid

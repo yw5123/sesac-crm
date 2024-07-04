@@ -34,7 +34,7 @@ def stores(page=1):
 
     # 파라미터에 마지막페이지보다 큰 값을 넣었을 경우 예외 처리
     if pages['current'] > pages['last']:
-        flash('임의로 URL을 변경하지 마시오.', 'warning')
+        flash('올바르지 않은 입력값입니다.', 'warning')
         return redirect(url_for('store.stores'))
 
     # 검색 결과가 없는 경우 예외 처리
@@ -55,13 +55,15 @@ def stores(page=1):
 
 @bp.route('/<id>')
 def store_detail(id):
+    # store 기본 정보 - 파라미터를 통해 임의의 값을 넣었을 경우에 대한 예외 처리
     query = "SELECT * FROM stores WHERE id = ?"
     try:
         store = get_query(query, (id,))[0]
     except IndexError:
-        flash('임의로 URL을 변경하지 마시오.', 'warning')
+        flash('올바르지 않은 입력값입니다.', 'warning')
         return redirect(url_for('store.stores'))
 
+    # 해당 store의 월간 매출액
     query = '''SELECT strftime('%Y-%m', o.OrderAt) AS Month, COUNT(DISTINCT o.Id) AS OrderCount, COUNT(i.Id) AS ItemCount, SUM(i.UnitPrice) AS Total
                 FROM stores s JOIN orders o ON s.Id = o.StoreId
                 JOIN orderitems oi ON o.Id = oi.OrderId
@@ -69,6 +71,7 @@ def store_detail(id):
                 WHERE s.id = ? GROUP BY Month'''
     orderinfos = get_query(query, (id,))
 
+    # 해당 store의 단골 고객 top10
     query = '''SELECT COUNT(u.id) AS NumVisits, u.name AS Name
                 FROM stores s JOIN orders o ON s.id = o.storeid
                 JOIN users u ON o.userid = u.id
